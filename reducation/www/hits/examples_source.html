@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript" SRC="graph.js"></SCRIPT>
+<TITLE>Graph Builder - Examples in Source Code</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+<FONT FACE="Arial,Helvetica" SIZE=-1>
+<FONT SIZE=+2><B>Graph Builder: Examples in Source Code</B></FONT><BR>
+<B><A HREF="./">Return to TechNote</A></B>
+<HR SIZE=1>
+<B>PLAIN GRAPH</B>
+<BLOCKQUOTE>
+<PRE>
+var g = new Graph(200,200);
+g.addRow( 4208,  10535,  10762, 10517, 4066,  4477, 10547);
+g.addRow( 2178,   4017,   3803, 22481, 2733,  2385,  4072);
+g.addRow( 1000,   2000,   3000,   400, 1000,  2000,   300);
+g.build();
+</PRE>
+</BLOCKQUOTE>
+<HR SIZE=1>
+<B>PLAIN GRAPH WITH SCALE</B>
+<BLOCKQUOTE>
+<PRE>
+var t = new Graph(200,200);
+t.scale = 5000;
+t.addRow( -4208,  10535,  10762, 10517, 4066,  4477, 10547);
+t.addRow( 2178,   -4017,   3803, 22481, -2733,  2385,  -14072);
+t.addRow( 1000,   2000,   3000,   400, 1000,  2000,   300);
+t.build();
+</PRE>
+<P>
+<PRE>
+var s = new Graph(200,200);
+s.scale = 5000;
+s.setXScale("",1);
+s.addRow( 4208,  10535,  10762, 10517, 4066,  4477, 10547);
+s.addRow( 2178,   4017,   3803, 22481, 2733,  2385, 14072);
+s.addRow( 1000,   2000,   3000,   400, 1000,  2000,   300);
+s.build();
+</PRE>
+</BLOCKQUOTE>
+<HR SIZE=1>
+<B>GRAPH WITH LEGEND</B>
+<BLOCKQUOTE>
+<PRE>
+var p = new Graph(200,200);
+p.scale = 3000;
+p.setXScale("",1);
+p.setLegend("red rulers","blue baddies","green gremlins");
+p.addRow( 4208,  10535,  10762, 10517, 4066,  4477, 10547);
+p.addRow( 2178,   4017,   3803, 22481, 2733,  2385,  4072);
+p.addRow( 1000,   2000,   3000,   400, 1000,  2000,   300);
+p.build();
+</PRE>
+</BLOCKQUOTE>
+<HR SIZE=1>
+<B>GRAPH WITH LABELS AND TITLE</B>
+<BLOCKQUOTE>
+<PRE>
+var q = new Graph(200,200);
+q.scale = 3000;
+q.title = "Governing Peoples";
+q.yLabel = "Hits";
+q.xLabel = "Date";
+q.setDate(8,5,1998);
+q.setLegend("red rulers","blue baddies","green gremlins");
+q.addRow( 4208,  10535,  10762, 10517, 4066,  4477, 10547);
+q.addRow( 2178,   4017,   3803, 22481, 2733,  2385,  4072);
+q.addRow( 1000,   2000,   3000,   400, 1000,  2000,   300);
+q.build();
+</PRE>
+</BLOCKQUOTE>
+<HR SIZE=1>
+<B>STACKED-TYPE GRAPH WITH BACKGROUND COLOR</B>
+<BLOCKQUOTE>
+<PRE>
+var h = new Graph(200,200,true);
+h.bgColor = "#DDDDDD";
+h.scale = 5000;
+h.setDate(8,5,1998);
+h.setLegend("red rulers","blue baddies","green gremlins");
+h.addRow( 4208,  10535,  10762, 10517, 4066,  4477, 10547);
+h.addRow( 2178,   4017,   3803, 22481, 2733,  2385,  4072);
+h.addRow( 1000,   2000,   3000,   400, 1000,  2000,   300);
+h.build();
+</PRE>
+</BLOCKQUOTE>
+<HR SIZE=1>
+<B>STACKED-TYPE RELATIVE-AREA GRAPH</B>
+<BLOCKQUOTE>
+<PRE>
+var i = new Graph(300,200);
+i.scale = 10;
+i.relative = true;
+i.setDate(8,5,1998);
+i.longDate = true;
+i.setLegend("red rulers","blue baddies","green gremlins");
+i.addRow( 4208,  10535,  10762, 10517, 4066,  4477, 10547);
+i.addRow( 2178,   4017,   3803, 22481, 2733,  2385,  4072);
+i.addRow( 1000,   2000,   3000,   400, 1000,  2000,   300);
+i.build();
+</PRE>
+</BLOCKQUOTE>
+</BODY>
+</HTML>

@@ -1,0 +1,52 @@
+ErrorDocument 400 /error.php?error=400
+ErrorDocument 402 /error.php?error=402
+ErrorDocument 403 /error.php?error=403
+ErrorDocument 404 /error.php?error=404
+ErrorDocument 405 /error.php?error=405
+ErrorDocument 406 /error.php?error=406
+ErrorDocument 407 /error.php?error=407
+ErrorDocument 408 /error.php?error=408
+ErrorDocument 409 /error.php?error=409
+ErrorDocument 410 /error.php?error=410
+ErrorDocument 411 /error.php?error=411
+ErrorDocument 412 /error.php?error=412
+ErrorDocument 413 /error.php?error=413
+ErrorDocument 414 /error.php?error=414
+ErrorDocument 415 /error.php?error=415
+ErrorDocument 416 /error.php?error=416
+ErrorDocument 417 /error.php?error=417
+ErrorDocument 418 /error.php?error=418
+ErrorDocument 419 /error.php?error=419
+ErrorDocument 420 /error.php?error=420
+ErrorDocument 421 /error.php?error=421
+ErrorDocument 422 /error.php?error=422
+ErrorDocument 423 /error.php?error=423
+ErrorDocument 424 /error.php?error=424
+ErrorDocument 425 /error.php?error=425
+ErrorDocument 426 /error.php?error=426
+ErrorDocument 500 /error.php?error=500
+ErrorDocument 501 /error.php?error=501
+ErrorDocument 502 /error.php?error=502
+ErrorDocument 503 /error.php?error=503
+ErrorDocument 504 /error.php?error=504
+ErrorDocument 505 /error.php?error=505
+ErrorDocument 506 /error.php?error=506
+ErrorDocument 507 /error.php?error=507
+ErrorDocument 508 /error.php?error=508
+ErrorDocument 509 /error.php?error=509
+ErrorDocument 510 /error.php?error=510
+
+
+Options +FollowSymLinks
+RewriteEngine On
+RewriteRule ^categories/([^/\.]+)/?$ category.php?category=$1 [QSA,L]
+RewriteRule ^users/([^/\.]+)/?$ user.php?user=$1 [QSA,L]
+RewriteRule ^favorite/authors/([^/\.]+)/?$ user/favoriteAuthors.php?user=$1 [QSA,L]
+RewriteRule ^favorite/haiku/([^/\.]+)/?$ user/favoriteHaiku.php?user=$1 [QSA,L]
+RewriteRule ^random/?$ index.php?random=1 [QSA,L]
+RewriteRule ^what/?$ info/what.php [QSA,L]
+RewriteRule ^about/?$ info/about.php [QSA,L]
+RewriteRule ^submit/?$ user/submit.php [QSA,L]
+RewriteRule ^activate/([^/\.]+)/([^/\.]+)?$ /user/activate.php?user=$1&act=$2 [QSA,L]
+RewriteRule ^user/passwordreset/([^/\.]+)/([^/\.]+)?$ /user/password.php?user=$1&act=$2 [QSA,L]
+RewriteRule ^ajax/([^/\.]+)/([^/\.]+)?$ /js/ajax.php?do=$1&for=$2 [QSA,L]

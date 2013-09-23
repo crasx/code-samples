@@ -1,0 +1,1 @@
+An old attempt at a website for haiku. This was written before I learned about MVC and frameworks. If I were to redo this it would definitely be build on a framework such as YII

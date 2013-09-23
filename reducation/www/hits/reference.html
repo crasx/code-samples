@@ -1,0 +1,187 @@
+<HTML>
+<HEAD>
+<TITLE>JavaScript Graph Builder - Quick Reference</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<CENTER>
+<FONT FACE="Arial,Helvetica" SIZE=-1>
+<FONT SIZE=+2><B>JavaScript Graph Builder</B></FONT><BR>
+<FONT SIZE=+1>Quick Reference Sheet</FONT><BR>
+<HR SIZE=1 WIDTH=200 NOSHADE>
+<TABLE WIDTH=80% BORDER=0 CELLSPACING=1>
+<TR>
+<TH WIDTH=100 BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>method</FONT></TH>
+<TH BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>Explanation</FONT></TH>
+<TH WIDTH=100 BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>arguments</FONT></TH>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>Graph()</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Graph object constructor. 
+</FONT></TD>
+<TD VALIGN=TOP><TT>width,<BR>height</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>addRow()</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Used to add data y-values to the graph.
+</FONT></TD>
+<TD VALIGN=TOP><TT>y-val1,<BR>y-val2,<BR>...</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>showXScale()</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Used to create a generic X-axis scale.
+</FONT></TD>
+<TD VALIGN=TOP><TT>start-val</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>setTime()</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Used to create a time-type X-axis scale.
+</FONT></TD>
+<TD VALIGN=TOP><TT>hour,<BR>min,<BR>pm?</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>setDate()</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Used to create a date-type X-axis scale.
+</FONT></TD>
+<TD VALIGN=TOP><TT>month,<BR>day,<BR>year</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>build()</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Builds the graph.
+</FONT></TD>
+<TD VALIGN=TOP><TT>&nbsp;</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>setLegend()</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Used to add a legend to the Graph.
+</FONT></TD>
+<TD VALIGN=TOP><TT>leg-name1,<BR>leg-name2,<BR>...</TT></TD>
+</TR>
+</TABLE>
+<P>
+<TABLE WIDTH=80% BORDER=0 CELLSPACING=1>
+<TR>
+<TH WIDTH=100 BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>property</FONT></TH>
+<TH BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>Explanation</FONT></TH>
+<TH WIDTH=100 BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>type</FONT></TH>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>stacked</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+True means build stacked-type graph.
+</FONT></TD>
+<TD VALIGN=TOP><TT>boolean</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>relative</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+True means build stacked-type relative-area graph.
+</FONT></TD>
+<TD VALIGN=TOP><TT>boolean</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>longDate</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+True means use long date format (i.e., 2-Jan instead of 1/2).</FONT></TD>
+<TD VALIGN=TOP><TT>boolean</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>showYear</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+True means show the year along with the date.
+</FONT></TD>
+<TD VALIGN=TOP><TT>boolean</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>showDay</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+True means show the day of the week along with the date.
+</FONT></TD>
+<TD VALIGN=TOP><TT>boolean</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>inc</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+X-axis scale increment (could be days or minutes
+depending on the scale type)
+</FONT></TD>
+<TD VALIGN=TOP><TT>integer</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>scale</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Y-axis scale increment
+</FONT></TD>
+<TD VALIGN=TOP><TT>integer</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>skip</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+Indicates the number of ticks between ticks with labels.
+(E.g., 2 would put labels on every other tick.)
+This should be used if the X-axis
+tick label won't fit because the ticks are too close together.
+</FONT></TD>
+<TD VALIGN=TOP><TT>integer</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>offset</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+Indicates the Y-offset of the X-axis
+(the "X-intercept"). Only use on graphs with only positive (or only
+negative) values.
+</FONT></TD>
+<TD VALIGN=TOP><TT>integer</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>title</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Title of the graph
+</FONT></TD>
+<TD VALIGN=TOP><TT>string</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>yLabel</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+Y-Label of the graph
+</FONT></TD>
+<TD VALIGN=TOP><TT>string</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>xLabel</TT></TD>
+<TD VALIGN=TOP><FONT FACE="Arial,Helvetica" SIZE=-1>
+X-Label of the graph
+</FONT></TD>
+<TD VALIGN=TOP><TT>string</TT></TD>
+</TR>
+<TR>
+<TD VALIGN=TOP><TT>bgColor</TT></TD>
+<TD><FONT FACE="Arial,Helvetica" SIZE=-1>
+Assigns a background color to the graph. Default (null) is a transparent
+graph.
+</FONT></TD>
+<TD VALIGN=TOP><TT>hexadecimal</TT></TD>
+</TR>
+</TABLE>
+</CENTER>
+<CENTER>
+
+<P>
+<FONT FACE="Arial, Helvetica" SIZE=-1>
+For the latest technical information on Sun-Netscape Alliance products, go to: <A HREF="http://developer.iplanet.com/index.html" TARGET="_top">http://developer.iplanet.com</A>
+<BR>
+<P>
+For more Internet development resources, try <A HREF="http://home.netscape.com/computing/techsearch/index.html?cp=dev01bnts" TARGET="_top">Netscape TechSearch</A>.</FONT></CENTER>
+<HR SIZE=1><CENTER>
+<FONT FACE="Arial, Helvetica" SIZE=-2><NOBR>Copyright &copy; 1999 <A HREF="http://home.netscape.com/misc/trademarks.html" TARGET="_top">Netscape Communications Corporation</A></NOBR>.<BR>This site powered by: <A HREF="http://home.netscape.com/servers/index.html" TARGET="_top">Netscape Enterprise Server</A> and <A HREF="http://home.netscape.com/compass/v3.0/index.html" TARGET="_top">Netscape Compass Server</A>.</FONT><BR>
+
+</CENTER>
+
+</BODY>
+</HTML>

@@ -1,0 +1,574 @@
+<HTML>
+<HEAD>
+<STYLE TYPE="text/css">
+#logo {
+ position: absolute;
+ visibility: hidden;
+ top: 7;
+ left: 10;
+ width: 12;
+ height: 18;
+ clip: rect(0,12,18,0);
+}
+.hilite {
+ background-color: #DDDDDD;
+}
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript1.2" SRC="graph.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" SRC="http://developer.netscape.com/docs/technote/dynhtml/drift/drift.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript">
+var inited = false;
+function init() {
+  inited = true;
+  if(parseInt(navigator.appVersion) < 4) {
+    alert("Sorry, a 4.0+ browser is required to use this library.\nFeel free to keep reading this TechNote, however.\nThe examples will show up as images.");
+    return;
+  }
+  if(document.layers) {
+    if(!document.layers.logo) return;
+    document.layers.logo.left = window.innerWidth - 34;
+    document.layers.logo.visibility = "visible";
+  } else if(document.all) {
+    if(!document.all.logo) return;
+    document.all.logo.style.pixelLeft = document.body.clientWidth - 18;
+    document.all.logo.style.visibility = "visible";
+  }
+  if(!document.all) document.all = document.layers;
+  var d = new Drift(); d.interval = 50;
+  d.startDrift(document.all.logo);
+}
+</SCRIPT>
+<TITLE>JavaScript Graph Builder</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+function loadWizard() {
+  if(parseInt(navigator.appVersion) < 4) {
+    alert("Sorry, a 4.0+ browser is required to use the wizard.");
+    return;
+  }
+  window.open("wizard_new.html","wizard","height=320,width=500,scrollbars=no,status=no,resizeable=no,toolbars=no,menubar=no");
+  return;
+}
+</SCRIPT>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" ONLOAD="init()">
+<P><BR><CENTER><!-- START: AOL 468 X 60 HTML AD TOKEN: DO NOT EDIT OR REMOVE THIS COMMENT -->
+<SCRIPT LANGUAGE="JavaScript1.1" SRC="http://ads.web.aol.com/html/64000755/netscape?htmlpre=document.write%28%27&htmlsuf=%3CBR%3E%3CA%20HREF%3D%22http://ads.web.aol.com/link/64000755/netscape%22%3E%3CB%3EClick%20Here!%3C/B%3E%3C/A%3E%27%29%3b&xlnl=%5cn&xltick=%5c%27&ctype=application/x-javascript&cook=hdr"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript">
+<!-- 
+var is_major = parseInt(navigator.appVersion); var is_ie = (navigator.userAgent.indexOf("MSIE") != -1);
+if (is_ie && (is_major < 4)) { 
+document.write('<!-- DO NOT CHANGE MAGIC NUM HERE --><A HREF="http://ads.web.aol.com/link/64002321/netscape" TARGET="_top"><IMG SRC="http://ads.web.aol.com/image/64002321/netscape" BORDER=0 WIDTH=468 HEIGHT=60 ALT="Click here!"></A><BR><A HREF="http://ads.web.aol.com/link/64002321/netscape" TARGET="_top"><B>Click Here!</B></A><!-- DO NOT CHANGE MAGIC NUM HERE -->');
+}
+//-->
+</SCRIPT>
+<NOSCRIPT>
+<!-- DO NOT CHANGE MAGIC NUM HERE -->
+<A HREF="http://ads.web.aol.com/link/64002321/netscape" target="_top"><IMG SRC="http://ads.web.aol.com/image/64002321/netscape" BORDER=0 WIDTH=468 HEIGHT=60 ALT="Click here!"></A><BR><A HREF="http://ads.web.aol.com/link/64002321/netscape" target="_top"><B>Click Here!</B></A>
+<!-- DO NOT CHANGE MAGIC NUM HERE -->
+</NOSCRIPT>
+<!-- END: AOL 468 X 60 HTML AD TOKEN: DO NOT EDIT OR REMOVE THIS COMMENT -->
+</CENTER>
+
+<BR>
+
+<CENTER>
+<FONT FACE="Arial,Helvetica" SIZE=-1>
+<FONT SIZE=+2><B>JavaScript Graph Builder</B></FONT><BR>
+<FONT SIZE=+1>A Graphing Program For Web Pages</FONT><BR>
+<HR SIZE=1 WIDTH=200 NOSHADE>
+<B>By <A HREF="mailto:mbostock@netscape.net">Michael Bostock</A><BR>
+Netscape Production Engineer</B>
+</CENTER>
+<P>
+<HR SIZE=1>
+<P>
+<BLOCKQUOTE>
+Graphs are a powerful visual tool for conveying data to the reader. They are used in a wide
+range of applications, from scientific studies and traffic analysis of Web sites to marketing
+research and business papers. Until now, if you wanted to have a graph in your Web page or 
+HTML email, you could take several routes. You could use a custom-built CGI to analyze your
+data and build a GIF file. Or, you could load up Excel (or a similar spreadsheet program),
+use the Graph Wizard, create a graph, paste it into a Photoshop document, and then export
+it as a GIF. Either way you go, it's not an easy process. Using the CGI you tax the server,
+and using Excel, you tax yourself.
+<P>
+JavaScript is a powerful language--powerful enough for you to use a JavaScript library in
+place of a CGI or Excel for most of your graphing needs on the Net. Building a graph is
+easy too; if you're using a 4.0+ browser, you can skip ahead to the
+<A HREF="javascript:loadWizard()">Graph
+Wizard</A> to generate the graph you need, right away! You can even email that graph to
+a friend or coworker by choosing "Send Page" from the "File" menu. If you want more control
+over your graphs, keep reading this article to learn how to use the JavaScript
+Graph Builder library.
+<P>
+The JavaScript Graph Builder and the sample code provided in this document are provided for your use on an "AS IS" basis, under the JavaScript Graph Builder <A HREF="license.html">Terms of Use</A>. 
+</BLOCKQUOTE>
+<P>
+<HR SIZE=1 NOSHADE>
+<B><A NAME="contents">CONTENTS</A></B>
+<P>
+<UL>
+<LI><A HREF="examples.html">A collection of examples</A>, in action
+<LI><A HREF="examples_source.html">A collection of examples</A>, source code version.
+<LI><A HREF="javascript:loadWizard()">Graph Wizard</A>
+<LI><A HREF="#include">How To Use The Library</A>
+<UL>
+<LI><A HREF="#simple">Getting Started</A>
+<LI><A HREF="#scales">Using Scales</A>
+</UL>
+<LI><A HREF="#addfunc">Additional Functionality</A>
+<UL>
+<LI><A HREF="#legends">Legends</A>
+<LI><A HREF="#stacked">Stacked and Relative-Area Graphs</A>
+</UL>
+<LI><A HREF="reference.html">Quick Reference Sheet</A>
+<LI><A HREF="#update102298">Update - 10/22/98</A>
+</UL>
+<HR SIZE=1 NOSHADE>
+<B><A NAME="include">HOW TO USE THE LIBRARY</A></B>
+<P>
+To use the library, you first have to include it. Start by downloading the library to your local 
+hard drive. Right-click on <A HREF="graph.js">graph.js</A> and select "Save Link As...."
+Next, add the following line of code below the &lt;HEAD&gt; tag of your document:
+<P>
+<BLOCKQUOTE></FONT><PRE>
+&lt;SCRIPT LANGUAGE="JavaScript1.2" SRC="graph.js"&gt;&lt;/SCRIPT&gt;
+</PRE><FONT FACE="Arial,Helvetica" SIZE=-1></BLOCKQUOTE>
+<P>
+You will also need a collection of images to reside in the same directory as the file in
+order for the graphs to display correctly. You can get these images by downloading
+<A HREF="graphimg.zip">graphimg.zip</A>.
+Now that the library and images have been included, you can call Graph Builder functions from
+within the &lt;BODY&gt; of your document, and the graphs will be built as the page loads.
+<P>
+<B><A NAME="simple">Getting Started</A></B>
+<P>
+All the interaction with the JavaScript Graph Builder library takes place inside the body of
+your HTML document, which lets you place the graph anywhere you want among regular HTML
+content. Once you decide where in the page you want the graph to appear, add the following
+lines of code:
+<P>
+<BLOCKQUOTE></FONT><PRE>
+&lt;SCRIPT LANGUAGE="JavaScript1.2"&gt;
+var g = new Graph(400,300);
+&lt;/SCRIPT&gt;
+</PRE><FONT FACE="Arial,Helvetica" SIZE=-1></BLOCKQUOTE>
+<P>
+This calls the Graph object constructor function, which creates a new Graph object that you
+can use to set attributes of your graph before you build it. By calling the constructor
+function, you've already set two properties. The first argument specifies the width (in 
+pixels) of the graph, and the second specifies the height. The Graph object above 
+has a width of 400 pixels and a height of 300 pixels.
+<P>
+Once the Graph object has been created, you can set the style of the graph (more on that
+later) and add the data. The data is the actual information you wish to plot. Because of
+the limitations of HTML, it would be extremely difficult to graph a line graph or a pie
+chart. Therefore, the Graph Builder library builds <I>only</I> bar graphs. The data that you are
+entering are y-values in the order they appear in the graph (from left to right). The
+x-values will be assigned automatically, determined by the order the data is entered and
+the x-scale definition (see the <A HREF="#scales">Using Scales</A> section).
+<P>
+In this example, I want to plot the number of hits on my Web page about fly fishing. I have
+collected the data from logs and I wish to graph it:
+<P>
+<CENTER>
+<TABLE BORDER=0 CELLSPACING=1>
+<TR>
+<TH WIDTH=100 BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>Date</FONT></TH>
+<TH WIDTH=100 BGCOLOR="#FFFFCC"><FONT FACE="Arial,Helvetica" SIZE=-1>Hits</FONT></TH>
+</TR>
+<TR>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>8/9/98 </FONT></TD>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>124</FONT></TD>
+</TR>
+<TR>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>8/10/98</FONT></TD>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>138</FONT></TD>
+</TR>
+<TR>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>8/11/98</FONT></TD>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>216</FONT></TD>
+</TR>
+<TR>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>8/12/98</FONT></TD>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>143</FONT></TD>
+</TR>
+<TR>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>8/13/98</FONT></TD>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>256</FONT></TD>
+</TR>
+<TR>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>8/14/98</FONT></TD>
+<TD ALIGN=CENTER><FONT FACE="Arial,Helvetica" SIZE=-1>302</FONT></TD>
+</TR>
+</TABLE>
+</CENTER>
+<P>
+To plot this data, I can use the </FONT><TT>addRow()</TT><FONT FACE="Arial,Helvetica" SIZE=-1>
+function and simply list the data:
+<P>
+<BLOCKQUOTE></FONT><PRE>
+&lt;SCRIPT LANGUAGE="JavaScript1.2"&gt;
+var g = new Graph(300,200);
+<SPAN CLASS="hilite">g.addRow(124,138,216,143,256,302);
+g.build();</SPAN>
+&lt;/SCRIPT&gt;
+</PRE><FONT FACE="Arial,Helvetica" SIZE=-1></BLOCKQUOTE>
+<P>
+(Note that I highlighted the new code in grey.)
+You'll see that I snuck in the </FONT><TT>build()</TT><FONT FACE="Arial,Helvetica" SIZE=-1> function.
+Call this function after you have set all the attributes of the graph, and it
+will make the graph display. The result of this code is this:
+<P>
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+if(parseInt(navigator.appVersion) >= 4) {
+  var g = new Graph(300,200);
+  g.addRow(124,138,216,143,256,302);
+  g.build();
+} else {
+  document.writeln("<IMG ALT=\"Upgrade to Communicator!\" SRC=\"ex1.gif\">");
+}
+</SCRIPT>
+<NOSCRIPT>
+<IMG SRC="ex1.gif" ALT="No Javascript? Turn it on, or upgrade to Communicator.">
+</NOSCRIPT>
+</CENTER>
+<P>
+Of course, this isn't a very satisfactory plot because it's unclear what
+exactly I am trying to plot. I'll have to do a little more work setting
+the Graph object attributes before I can call this a bona fide graph.
+<P>
+<B><A NAME="scales">Using Scales</A></B>
+<P>
+Start by setting the Y-axis scale. By setting the
+</FONT><TT>scale</TT><FONT FACE="Arial,Helvetica" SIZE=-1> attribute,
+the Graph Builder library will automatically add a Y-axis scale. For
+this data, a good scale would be 50:
+<P>
+<BLOCKQUOTE></FONT><PRE>
+&lt;SCRIPT LANGUAGE="JavaScript1.2"&gt;
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+<SPAN CLASS="hilite">g.scale = 50;</SPAN>
+g.build();
+&lt;/SCRIPT&gt;
+</PRE><FONT FACE="Arial,Helvetica" SIZE=-1></BLOCKQUOTE>
+<P>
+Here's the result:
+<P>
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+if(parseInt(navigator.appVersion) >= 4) {
+  var g = new Graph(300,200);
+  g.addRow(124,138,216,143,256,302);
+  g.scale = 50;
+  g.build();
+} else {
+  document.writeln("<IMG ALT=\"Upgrade to Communicator!\" SRC=\"ex2.gif\">");
+}
+</SCRIPT>
+<NOSCRIPT>
+<IMG SRC="ex2.gif" ALT="No JavaScript? Turn it on, or upgrade to Communicator.">
+</NOSCRIPT>
+</CENTER>
+<P>
+So now I've got a nifty Y-axis scale running up the left side of
+the graph to indicate the values of the bars. There's another
+way to get the exact values of the bars, though, which you may not
+have noticed. If you hold the mouse over the bar (on Windows/UNIX
+version of Navigator and Internet Explorer), a small yellow box will appear showing
+the exact value of the data. Try it!
+<P>
+My graph still isn't quite ready, because it's unclear to what
+the X-axis corresponds. There are three types of X-axis scales you can
+choose from. Because my data points are each on separate days, I 
+am going to use the date-type X-axis scale. However, if I had data
+that I wanted to graph over hours or minutes, I would use the 
+time-type X-axis scale. There is also the "other" type of X-axis scale 
+which can be used to create a more generalized X-axis for almost
+any sort of data.
+<P>
+To set the starting date of the X-axis, use the
+</FONT><TT>setDate()</TT><FONT FACE="Arial,Helvetica" SIZE=-1> function.
+This function takes three arguments: the month, the day, and the year.
+Here's my example, continued:
+<P>
+<BLOCKQUOTE></FONT><PRE>
+&lt;SCRIPT LANGUAGE="JavaScript1.2"&gt;
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+g.scale = 50;
+<SPAN CLASS="hilite">g.setDate(8,10,1998);</SPAN>
+g.build();
+&lt;/SCRIPT&gt;
+</PRE><FONT FACE="Arial,Helvetica" SIZE=-1></BLOCKQUOTE>
+<P>
+Here's the result:
+<P>
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+if(parseInt(navigator.appVersion) >= 4) {
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+g.scale = 50;
+g.setDate(8,10,1998);
+g.build();
+} else {
+  document.writeln("<IMG ALT=\"Upgrade to Communicator!\" SRC=\"ex3.gif\">");
+}
+</SCRIPT>
+<NOSCRIPT>
+<IMG SRC="ex3.gif" ALT="No JavaScript? Turn it on, or upgrade to Communicator.">
+</NOSCRIPT>
+</CENTER>
+<P>
+And that's it. In five lines of code, I've created the graph I need to
+convey my data. But there's much more we can do, so keep reading.
+<P>
+If, instead, my data points came every hour, I could use the
+</FONT><TT>setTime()</TT><FONT FACE="Arial,Helvetica" SIZE=-1> function
+to set the starting time on the X-axis. This function takes three
+arguments: the hour, the minute, and a boolean (true/false), which
+specifies whether the time is AM or PM. True means PM; false means AM.
+If I wasn't graphing times <I>or</I> dates, I could use the
+</FONT><TT>setXScale()</TT><FONT FACE="Arial,Helvetica" SIZE=-1> to
+create a more generalized X-axis scale. This function takes only 
+one argument, which is the starting value of the X-axis (13, e.g.).
+<P>
+What if, however, I was graphing points every three days, or every
+week, or even every 42 minutes? How would I do that? By setting the
+</FONT><TT>inc</TT><FONT FACE="Arial,Helvetica" SIZE=-1> property
+of the Graph object, you can determine how much time (or, more generally,
+x-values) passes between each data point. For example, if I had a
+date-type x-scale and I set
+</FONT><TT>inc</TT><FONT FACE="Arial,Helvetica" SIZE=-1> to 7, it 
+would mean the points came every week. If I had a time-type x-scale
+and I set
+</FONT><TT>inc</TT><FONT FACE="Arial,Helvetica" SIZE=-1> to 60, it
+would mean the points came every hour. 
+(</FONT><TT>inc</TT><FONT FACE="Arial,Helvetica" SIZE=-1> means 
+minutes in the time-type scale, and days in the date-type scale.)
+<P>
+<HR SIZE=1 NOSHADE>
+<B><A NAME="addfunc">ADDITIONAL FUNCTIONALITY</A></B>
+<P>
+<B><A NAME="legends">Legends</A></B>
+<P>
+Besides plotting data and setting scales, Microsoft Excel lets you add
+labels to your axes, legends, and titles. Not to worry, the Graph Builder
+library can handle that, too. To add a label to the X-axis, simply set
+the </FONT><TT>xLabel</TT><FONT FACE="Arial,Helvetica" SIZE=-1> property
+of the Graph object. To add a label to the Y-axis, set the 
+</FONT><TT>yLabel</TT><FONT FACE="Arial,Helvetica" SIZE=-1> property. To
+add the title? Set the
+</FONT><TT>title</TT><FONT FACE="Arial,Helvetica" SIZE=-1> property.
+Continuing with my example:
+<P>
+<BLOCKQUOTE></FONT><PRE>
+&lt;SCRIPT LANGUAGE="JavaScript1.2"&gt;
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+g.scale = 50;
+g.setDate(8,10,1998);
+<SPAN CLASS="hilite">g.title = "My Fly Fishing Page";
+g.xLabel = "Date";
+g.yLabel = "Hits";</SPAN>
+g.build();
+&lt;/SCRIPT&gt;
+</PRE><FONT FACE="Arial,Helvetica" SIZE=-1></BLOCKQUOTE>
+<P>
+Here's the result:
+<P>
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+if(parseInt(navigator.appVersion) >= 4) {
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+g.scale = 50;
+g.setDate(8,10,1998);
+g.title = "My Fly Fishing Page";
+g.xLabel = "Date";
+g.yLabel = "Hits";
+g.build();
+} else {
+  document.writeln("<IMG ALT=\"Upgrade to Communicator!\" SRC=\"ex4.gif\">");
+}
+</SCRIPT>
+<NOSCRIPT>
+<IMG SRC="ex4.gif" ALT="No JavaScript? Turn it on, or upgrade to Communicator.">
+</NOSCRIPT>
+</CENTER>
+<P>
+Legends are a bit more complicated. They are only relevant when you are
+graphing more than one series at a time. That is simple to do, however,
+by successive calls to the
+</FONT><TT>addRow()</TT><FONT FACE="Arial,Helvetica" SIZE=-1> function.
+Say, in my example, that instead of just graphing hits on my Fly Fishing
+page, I was also graphing hits on my Sport Fishing page, and that I 
+wanted to get an idea of how the growth in hits compare. I would want
+to graph them side-by-side, and so I'd make two calls to the
+</FONT><TT>addRow()</TT><FONT FACE="Arial,Helvetica" SIZE=-1> function.
+Then, I'd use the </FONT><TT>setLegend()</TT><FONT FACE="Arial,Helvetica" SIZE=-1>
+function and list the names of the series:
+<P>
+<P>
+<BLOCKQUOTE></FONT><PRE>
+&lt;SCRIPT LANGUAGE="JavaScript1.2"&gt;
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+<SPAN CLASS="hilite">g.addRow(201,234,340,210,314,320);</SPAN>
+g.scale = 50;
+g.setDate(8,10,1998);
+g.title = "My Web Pages";
+g.xLabel = "Date";
+g.yLabel = "Hits";
+<SPAN CLASS="hilite">g.setLegend("Fly Fishing","Sport Fishing");</SPAN>
+g.build();
+&lt;/SCRIPT&gt;
+</PRE><FONT FACE="Arial,Helvetica" SIZE=-1></BLOCKQUOTE>
+<P>
+Here's the result:
+<P>
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+if(parseInt(navigator.appVersion) >= 4) {
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+g.addRow(201,234,340,210,314,320);
+g.scale = 50;
+g.setDate(8,10,1998);
+g.title = "My Web Pages";
+g.xLabel = "Date";
+g.yLabel = "Hits";
+g.setLegend("Fly Fishing","Sport Fishing");
+g.build();
+} else {
+  document.writeln("<IMG ALT=\"Upgrade to Communicator!\" SRC=\"ex5.gif\">");
+}
+</SCRIPT>
+<NOSCRIPT>
+<IMG SRC="ex5.gif" ALT="No JavaScript? Turn it on, or upgrade to Communicator.">
+</NOSCRIPT>
+</CENTER>
+<P>
+<B><A NAME="stacked">Stacked and Relative-Area Graphs</A></B>
+<P>
+Say that instead of a side-by-side graph, I want to stack the values
+one on top of each other, so that I can see the total growth of hits
+on my two Web pages, not just each one individually. I can do this by
+setting the </FONT><TT>stacked</TT><FONT FACE="Arial,Helvetica" SIZE=-1>
+property to true. But say that I not only want to stack the values
+on top of each other, but I want to see the <I>relative</I> contributions, 
+as a percentage, of the two Web pages to the total amount of hits.
+I can do this by setting the
+</FONT><TT>relative</TT><FONT FACE="Arial,Helvetica" SIZE=-1> property to
+true.
+<P>
+A stacked graph:
+<P>
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+if(parseInt(navigator.appVersion) >= 4) {
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+g.addRow(201,234,340,210,314,320);
+g.stacked = true;
+g.scale = 100;
+g.setDate(8,10,1998);
+g.title = "My Web Pages";
+g.xLabel = "Date";
+g.yLabel = "Hits";
+g.setLegend("Fly Fishing","Sport Fishing");
+g.build();
+} else {
+  document.writeln("<IMG ALT=\"Upgrade to Communicator!\" SRC=\"ex6.gif\">");
+}
+</SCRIPT>
+<NOSCRIPT>
+<IMG SRC="ex6.gif" ALT="No JavaScript? Turn it on, or upgrade to Communicator.">
+</NOSCRIPT>
+</CENTER>
+<P>
+A relative-area graph:
+<P>
+<CENTER>
+<SCRIPT LANGUAGE="JavaScript">
+if(parseInt(navigator.appVersion) >= 4) {
+var g = new Graph(300,200);
+g.addRow(124,138,216,143,256,302);
+g.addRow(201,234,340,210,314,320);
+g.relative = true;
+g.scale = 10;
+g.setDate(8,10,1998);
+g.title = "My Web Pages";
+g.xLabel = "Date";
+g.yLabel = "Hits";
+g.setLegend("Fly Fishing","Sport Fishing");
+g.build();
+} else {
+  document.writeln("<IMG ALT=\"Upgrade to Communicator!\" SRC=\"ex7.gif\">");
+}
+</SCRIPT>
+<NOSCRIPT>
+<IMG SRC="ex7.gif" ALT="No JavaScript? Turn it on, or upgrade to Communicator.">
+</NOSCRIPT>
+</CENTER>
+<P>
+<HR SIZE=1 NOSHADE>
+<B>FINAL NOTE</B>
+<P>
+Because there's quite a bit you can do with the Graph Builder library,
+I've compiled a <A HREF="reference.html">Quick Reference</A> sheet that
+you can print out. It also lists six other attributes not mentioned here
+that you can set to tweak its appearance.
+<P>
+Comments/Questions? Please send feedback to: <A HREF="mailto:mikebos@netscape.net">mikebos@netscape.net</A>
+<P>
+<HR SIZE=1 NOSHADE>
+<B><A NAME="update102298">UPDATE - 10/22/98</A></B>
+<P>
+After getting the same request from many different developers, I decided to
+update the Graph Builder library to include one more function,
+</FONT><TT>setXScaleValues()</TT><FONT SIZE=-1 FACE="Arial,Helvetica">. This
+function takes any number of arguments (usually the number of x values) and
+can be used to explicitly label each column. For instance, if you wanted to
+graph the sales of different types of fruit in your store, it would be useful
+to set the x-scale values to "Oranges", "Apples", and "Lemons". Calling
+</FONT><TT>g.setXScaleValues("Oranges", "Apples", "Lemons")</TT><FONT FACE="Arial,Helvetica" SIZE=-1>
+(where </FONT><TT>g</TT><FONT FACE="Arial,Helvetica" SIZE=-1> is your Graph
+object) will accomplish this.
+<P>
+<HR SIZE=1 NOSHADE>
+<B>ABOUT THE AUTHOR</B>
+<P>
+<P>
+<A HREF="http://www.princeton.edu/~mbostock/" TARGET="_top">Michael
+Bostock</A> is a class of 2000 student at Princeton University in New
+Jersey. He is a Computer Science major in the Engineering school.
+When not interning with Netscape Communications Corporation, he is a
+tenor saxophonist in the
+thousand-member strong <A HREF="http://www.princeton.edu/~puband/"
+TARGET="_top">Princeton University Band</A>.
+<P>
+<DIV ALIGN=RIGHT ID="logo" NAME="logo">
+<A HREF="#contents"><IMG SRC="http://developer.netscape.com/docs/technote/dynhtml/drift/arrow.gif" HEIGHT=18 WIDTH=12 BORDER=0></A>
+</DIV>
+<CENTER>
+
+<P>
+<FONT FACE="Arial, Helvetica" SIZE=-1>
+For the latest technical information on Sun-Netscape Alliance products, go to: <A HREF="http://developer.iplanet.com/index.html" TARGET="_top">http://developer.iplanet.com</A>
+<BR>
+<P>
+For more Internet development resources, try <A HREF="http://home.netscape.com/computing/techsearch/index.html?cp=dev01bnts" TARGET="_top">Netscape TechSearch</A>.</FONT></CENTER>
+<HR SIZE=1><CENTER>
+<FONT FACE="Arial, Helvetica" SIZE=-2><NOBR>Copyright &copy; 1999 <A HREF="http://home.netscape.com/misc/trademarks.html" TARGET="_top">Netscape Communications Corporation</A></NOBR>.<BR>This site powered by: <A HREF="http://home.netscape.com/servers/index.html" TARGET="_top">Netscape Enterprise Server</A> and <A HREF="http://home.netscape.com/compass/v3.0/index.html" TARGET="_top">Netscape Compass Server</A>.</FONT><BR>
+
+</CENTER>
+
+</BODY>
+</HTML>
+
+
+

@@ -1,0 +1,50 @@
+BODY {
+scrollbar-face-color: #333333;
+scrollbar-arrow-color: #AA7500;
+scrollbar-base-color: #AA7500;
+scrollbar-shadow-color: #AA7500;
+scrollbar-dark-shadow-color: #FFFFFF;
+scrollbar-highlight-color: gray;
+color:ffffff;
+scrollbar-3d-light-color: #FFFFFF}
+//-->
+body {font-family:arial; font-size: 13px; color:white}
+.button       { font-family:arial; border: 1 solid #A3A3D6 }
+.button-Over { background-color: #AA7500; border: 1 solid #FFFFFF }
+td { font-family:arial; font-size:11px; color:white; background-repeat:no-repeat;}
+.menu{font-size:13px;}
+.menut{font-size:14px;}
+.main a{color:red; }
+H3
+{font-family:arial; font-size: 18px; color:white;
+    MARGIN-TOP: 3px;
+    MARGIN-BOTTOM: 3px
+
+}
+H4
+{font-family:arial; font-size: 16px; color:white;
+    MARGIN-TOP: 3px;
+    MARGIN-BOTTOM: 3px
+
+}
+H5
+{font-family:arial; font-size: 14px; color:white;
+    MARGIN-TOP: 3px;
+    MARGIN-BOTTOM: 3px
+}
+ul { MARGIN-TOP: 3px; MARGIN-BOTTOM: 3px }
+A
+{
+	font-family:arial; 
+    COLOR: white;
+    TEXT-DECORATION: none
+}
+td{
+background-repeat:no-repeat;
+}
+A:hover
+{
+	color: #FFCC00;
+	background: blue;
+	TEXT-DECORATION:none
+}

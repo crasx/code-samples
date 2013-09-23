@@ -1,0 +1,1 @@
+monitor3.8.1.1.exe -server server.exe -init "init/ctfsniper1.txt" -min 12006 -max 12006 -log "logs/ctfsniper1.txt" -initf 30000 -freq 15000 -config config.txt -priority 4
