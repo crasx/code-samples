@@ -1,4 +1,8 @@
 /**
+* Note from future Matt: I appologize for the formatting of this. Let's use this
+* as an example of why coding standards are important.
+*/
+/**
 statsh – Processes and System Calls
 
 For this assignment, you are to write a shell named st
